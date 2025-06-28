@@ -6,13 +6,14 @@ import { Routes, Route } from "react-router-dom"
 
 function App() {
   return (
-    <div className="justify-items-center">
+    <div className="main-content flex min-h-screen bg-transparent">
       <NavBar />
       <main className='main-content'>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/AboutUs" element={<AboutUs />} />
-        </Routes>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/Home" element={<Home />} />
+            <Route path="/AboutUs" element={<AboutUs />} />
+          </Routes>
       </main>
     </div>
   )

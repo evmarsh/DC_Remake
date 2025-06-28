@@ -36,3 +36,15 @@
         margin-left: auto;
     }
 }
+
+.page-break-top {
+    height: 50%;
+    width: 100%;
+    background: dark;
+}
+
+@media (width < 48rem) {
+    .home-cards {
+        flex-direction: column;
+    }
+}

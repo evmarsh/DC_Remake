@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import NavBarItem from './NavBarItem'; // Ensure this path is correct
-import dcLogo from '../assets/dcLogo.png';
 import { Link } from 'react-router-dom';
 
 function NavBar() {
@@ -11,16 +10,16 @@ function NavBar() {
     };
 
     return (
-        <div className="absolute inset-x-0 top-0 h-16 bg-dark flex flex-row items-center px-4">
+        <div className="absolute inset-x-0 top-0 h-16 bg-dark flex flex-row items-center px-4 z-10">
             {/* Logo/Brand Name (optional) */}
             <div className="py-2 px-3 rounded-md cursor-pointer">
-                <Link to="/Home">
-                    <img src={dcLogo} alt="DC Logo" className='w-12 h-12 rounded-full' />
+                <Link to="/">
+                    <h1 className='text-white font-stretch-50%'>Dick Clark's</h1>
                 </Link>
             </div>
 
             {/* Hamburger Icon - Visible on small screens, hidden on medium and larger */}
-            <div className="flex items-center" class="hamburger">
+            <div className="flex items-center hamburger">
                 {/* Hamburger Icon - Visible on small screens, hidden on medium and larger */}
                 <button
                     className="text-white md:hidden focus:outline-none p-2"
@@ -55,7 +54,7 @@ function NavBar() {
                 <div className={`
                     ${isOpen ? 'flex' : 'hidden'}
                     flex-col absolute top-16 right-0 w-48 bg-dark p-4 rounded-b-lg shadow-lg
-                    md:flex md:flex-row md:static md:w-auto md:bg-transparent md:p-0 md:shadow-none
+                    md:flex md:flex-row md:static md:w-auto md:bg-transparent md:p-0 md:shadow-none z-30
                 `}>
                     <NavBarItem to="/" text="Hours & Location" onClick={toggleMenu} />
                     <NavBarItem to="/" text="Menu" onClick={toggleMenu} />
