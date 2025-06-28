@@ -56,8 +56,8 @@ function NavBar() {
                     flex-col absolute top-16 right-0 w-48 bg-dark p-4 rounded-b-lg shadow-lg
                     md:flex md:flex-row md:static md:w-auto md:bg-transparent md:p-0 md:shadow-none z-30
                 `}>
-                    <NavBarItem to="/" text="Menu" onClick={toggleMenu} />
-                    <NavBarItem to="/" text="Book a Party" onClick={toggleMenu} />
+                    <NavBarItem to="/menu" text="Menu" onClick={toggleMenu} />
+                    <NavBarItem to="/book_a_party" text="Book a Party" onClick={toggleMenu} />
                     <NavBarItem to="/" text="Order Online" onClick={toggleMenu} />
                 </div>
             </div>

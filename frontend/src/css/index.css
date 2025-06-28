@@ -56,10 +56,19 @@
 }
 
 .facebook-link {
-    fill: white;
+    fill: var(--color-light);
     transition: fill 0.3s ease;
 }
 
-.facebook-link:hover {
-    fill: black;
+.facebook:hover .facebook-link {
+    fill: var(--color-dark);
+}
+
+.google-link {
+    fill: var(--color-light);
+    transition: fill 0.3s ease;
+}
+
+.google:hover .google-link {
+    fill: var(--color-dark);
 }
