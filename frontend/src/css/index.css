@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+@theme {
+    --color-dark: #040305;
+    --color-light: #d6d4d9;
+    --color-secondary: #9FA6B2;
+}
+
+@layer components {
+    .navbar-item {
+        @apply relative flex items-center justify-center mx-2 my-auto text-white;
+        /* Added for better mobile UX: */
+        @apply py-2 px-3 rounded-md hover:bg-gray-700 transition-colors duration-200;
+    }
+
+    .sidebar-icon {
+        @apply relative flex items-center justify-center h-12 w-12 my-2 mx-auto
+               bg-gray-800 text-green-500
+               hover:bg-green-600 hover:text-white
+               rounded-3xl hover:rounded-xl
+               transition-all duration-125 ease-linear
+               cursor-pointer;
+    }
+
+    .sidebar-tooltip {
+        @apply absolute w-auto p-2 m-2 min-w-max left-14
+        rounded-md shadow-md
+        text-white bg-gray-900
+        text-xs font-bold
+        transition-all duration-100 scale-0 origin-left;
+    }
+}
+
+@media (width <= 48rem){ 
+    .hamburger {
+        margin-left: auto;
+    }
+}
