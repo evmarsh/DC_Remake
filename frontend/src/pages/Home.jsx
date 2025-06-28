@@ -1,7 +1,6 @@
 import Card from '../components/Card';
 import dc from '../../public/Dick-Clarks.jpg';
 
-
 function Home() {
     const homePageStyle = {
         background: 'linear-gradient(to bottom, var(--color-dark) 60%, var(--color-light) 40%',
@@ -32,14 +31,14 @@ function Home() {
                     <a href="tel:+1 812-385-3131">(812) 385-3131</a>
                 </div>
             </div>
-            <div id="map" className='pb-5 mx-5'>
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2831.0956935557724!2d-87.56834962462119!3d38.36141697815207!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8871e1913d487707%3A0x2e4770d38b48af4!2sDick%20Clark&#39;s%20Family%20Restaurant!5e1!3m2!1sen!2sus!4v1751089050978!5m2!1sen!2sus" 
-                        width="600" 
-                        height="450" 
+            <div className='pb-5 mx-5'>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3127.959984402696!2d-87.56703018568953!3d38.36164408232969!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8871e1913d487707%3A0x2e4770d38b48af4!2sDick%20Clark&#39;s%20Family%20Restaurant!5e0!3m2!1sen!2sus!4v1751134583573!5m2!1sen!2sus" 
+                        className='md:w-120 md:h-120'
                         style={{border: 0}}
-                        allowfullscreen="" 
+                        allowFullScreen="" 
                         loading="lazy" 
-                        referrerpolicy="no-referrer-when-downgrade">
+                        referrerPolicy="no-referrer-when-downgrade"
+                        id="map">
                 </iframe>
             </div>
         </div>
@@ -51,8 +50,19 @@ function Home() {
                 <p className='py-2'>Whether you're a longtime regular or first-time visitor, we invite you to experience our warm hospitality and see why Dick Clark's has been the place "where the locals go" for over 75 years. Join us for a meal and become part of our continuing story.</p>
             </div>
         </div>
-        <footer>
-            
+        <footer className='inset-x-0 bottom-0 h-16 bg-dark flex flex-row items-center justify-center px-4 z-10'>
+            <div className=''>
+                <a href="https://www.facebook.com/share/15bkfqHAcg/?mibextid=LQQJ4d"
+                class="p-2 rounded-lg flex items-center border border-gray-300 justify-center transition-all duration-500 hover:border-gray-100 hover:bg-gray-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 71 72"
+                    fill="white">
+                    <path
+                    className="facbook-link"
+                    d="M46.4233 38.6403L47.7279 30.3588H39.6917V24.9759C39.6917 22.7114 40.8137 20.4987 44.4013 20.4987H48.1063V13.4465C45.9486 13.1028 43.7685 12.9168 41.5834 12.8901C34.9692 12.8901 30.651 16.8626 30.651 24.0442V30.3588H23.3193V38.6403H30.651V58.671H39.6917V38.6403H46.4233Z"
+                     />
+                    </svg>
+                </a>
+            </div>
         </footer>
     </div>
     );
