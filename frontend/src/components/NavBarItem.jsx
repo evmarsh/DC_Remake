@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 function NavBarItem({ text, to, className, onClick }) {
     return (
         // Apply onClick handler
-        <div className={`navbar-item ${className || ''}`} onClick={onClick}>
-            <Link to={to}>
+        <div>
+            <Link to={to} className={`navbar-item ${className || ''}`} onClick={onClick}>
                 <p className="text-white text-lg font-medium">{text}</p>
             </Link>
         </div>

@@ -1,15 +1,31 @@
-import Card from '../components/Card';
 import dc from '../assets/Dick-Clarks.jpg';
 import Footer from '../components/Footer';
+import ReactImageGallery from 'react-image-gallery';
 
 function Home() {
     const homePageStyle = {
         background: 'linear-gradient(to bottom, var(--color-dark) 60%, var(--color-light) 40%',
     };
 
+    const aboutPageStyle = {
+        background: 'linear-gradient(to bottom, var(--color-dark) 10%, var(--color-light) 0%',
+    };
+
+    const images = [
+    {
+        original: "https://picsum.photos/id/1018/1000/600/",
+    },
+    {
+        original: "https://picsum.photos/id/1015/1000/600/",
+    },
+    {
+        original: "https://picsum.photos/id/1019/1000/600/",
+    },
+    ];
+
     return (
     <div>
-        <div className="w-full mt-12 flex flex-col items-center justify-center relative overflow-hidden"
+        <div className="w-full flex flex-col items-center justify-center relative overflow-hidden"
              style={homePageStyle}>
             <img src={dc} alt="Picture of Dick Clark's exterior" className="scale-75" />
         </div>
@@ -43,7 +59,8 @@ function Home() {
                 </iframe>
             </div>
         </div>
-        <div className="w-full flex flex-col text-center items-center justify-center bg-dark py-5 text-white">
+        <div className="w-full flex flex-col text-center items-center justify-center bg-dark py-5 text-white relative overflow-hidden"
+             style={aboutPageStyle}>
             <div className='w-3/4'>
                 <h1>About Us</h1>
                 <p className='py-2 border-b-2'>December 1946, Richard "Dick" Clark opened an ice cream and short orders shop in a small addition next to his uncle's grocery store, Sutton's grocery, located at 702 N. Prince St. The shop quickly evolved into a full dine in/carry out restaurant with a comprehensive menu featuring steaks, spaghetti, homemade pizza, fresh-made sandwiches, premium beer, select wines, and of course, our signature ice cream. Known affectionately to locals as Dick Clark's, our establishment was proudly operated by the Clark Family for 75 years, serving generations of families and becoming a cornerstone of the community. Over the decades, the Clark Family thoughtfully expanded the restaurant to meet growing demand, adding a comfortable meeting room and an expansive banquet facility that can accommodate up to 200 guests for special events, celebrations, and gatherings.</p>
@@ -51,7 +68,11 @@ function Home() {
                 <p className='py-2'>Whether you're a longtime regular or first-time visitor, we invite you to experience our warm hospitality and see why Dick Clark's has been the place "where the locals go" for over 75 years. Join us for a meal and become part of our continuing story.</p>
             </div>
         </div>
-        <Footer />
+        <div className="w-full flex flex-col text-center items-center justify-center bg-light py-5 text-black">
+            
+            <ReactImageGallery items={images} />
+            <button className="text-white mt-5 button">Book a Party</button>
+        </div>
     </div>
     );
 }

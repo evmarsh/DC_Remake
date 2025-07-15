@@ -10,7 +10,7 @@ function NavBar() {
     };
 
     return (
-        <div className="absolute inset-x-0 top-0 h-16 bg-dark flex flex-row items-center px-4 z-10">
+        <div className="absolute inset-x-0 top-0 h-16 min-w-full bg-dark flex flex-row items-center px-4 z-10">
             {/* Logo/Brand Name (optional) */}
             <div className="py-2 px-3 rounded-md cursor-pointer">
                 <Link to="/">

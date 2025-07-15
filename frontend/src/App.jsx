@@ -4,12 +4,13 @@ import BookAParty from './pages/BookAParty'
 import Menu from './pages/Menu'
 import NavBar from './components/NavBar'
 import { Routes, Route } from "react-router-dom"
+import Footer from './components/Footer'
 
 function App() {
   return (
-    <div className="main-content flex min-h-screen bg-transparent">
+    <div className="main-content flex flex-col min-h-screen bg-transparent">
       <NavBar />
-      <main className='main-content'>
+      <main className='main-content w-full pt-16 flex-grow'>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/Home" element={<Home />} />
@@ -17,6 +18,7 @@ function App() {
             <Route path="menu" element={<Menu />} />
           </Routes>
       </main>
+      <Footer />
     </div>
   )
 }
