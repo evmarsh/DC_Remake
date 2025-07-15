@@ -8,7 +8,7 @@ function Home() {
     };
 
     const aboutPageStyle = {
-        background: 'linear-gradient(to bottom, var(--color-dark) 10%, var(--color-light) 0%',
+        background: 'linear-gradient(to bottom, var(--color-dark) 20%, var(--color-light) 80%',
     };
 
     const images = [
@@ -59,8 +59,7 @@ function Home() {
                 </iframe>
             </div>
         </div>
-        <div className="w-full flex flex-col text-center items-center justify-center bg-dark py-5 text-white relative overflow-hidden"
-             style={aboutPageStyle}>
+        <div className="w-full flex flex-col text-center items-center justify-center bg-dark py-5 text-white">
             <div className='w-3/4'>
                 <h1>About Us</h1>
                 <p className='py-2 border-b-2'>December 1946, Richard "Dick" Clark opened an ice cream and short orders shop in a small addition next to his uncle's grocery store, Sutton's grocery, located at 702 N. Prince St. The shop quickly evolved into a full dine in/carry out restaurant with a comprehensive menu featuring steaks, spaghetti, homemade pizza, fresh-made sandwiches, premium beer, select wines, and of course, our signature ice cream. Known affectionately to locals as Dick Clark's, our establishment was proudly operated by the Clark Family for 75 years, serving generations of families and becoming a cornerstone of the community. Over the decades, the Clark Family thoughtfully expanded the restaurant to meet growing demand, adding a comfortable meeting room and an expansive banquet facility that can accommodate up to 200 guests for special events, celebrations, and gatherings.</p>
@@ -68,8 +67,8 @@ function Home() {
                 <p className='py-2'>Whether you're a longtime regular or first-time visitor, we invite you to experience our warm hospitality and see why Dick Clark's has been the place "where the locals go" for over 75 years. Join us for a meal and become part of our continuing story.</p>
             </div>
         </div>
-        <div className="w-full flex flex-col text-center items-center justify-center bg-light py-5 text-black">
-            
+        <div className="w-full flex flex-col text-center items-center justify-center bg-light py-5 text-black relative overflow-hidden"
+        style={aboutPageStyle}>
             <ReactImageGallery items={images} />
             <button className="text-white mt-5 button">Book a Party</button>
         </div>
