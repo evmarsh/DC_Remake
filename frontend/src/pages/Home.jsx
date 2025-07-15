@@ -8,18 +8,21 @@ function Home() {
     };
 
     const aboutPageStyle = {
-        background: 'linear-gradient(to bottom, var(--color-dark) 20%, var(--color-light) 80%',
+        background: 'linear-gradient(to bottom, var(--color-dark) 20%, var(--color-light) 20%',
     };
 
     const images = [
     {
-        original: "https://picsum.photos/id/1018/1000/600/",
+        original: "src/assets/pizza.jpg",
     },
     {
-        original: "https://picsum.photos/id/1015/1000/600/",
+        original: "src/assets/cheese_bread.jpg",
     },
     {
-        original: "https://picsum.photos/id/1019/1000/600/",
+        original: "src/assets/wide_shot.jpg",
+    },
+    {
+        original: "src/assets/birthday.jpg",
     },
     ];
 

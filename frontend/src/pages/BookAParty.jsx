@@ -54,9 +54,6 @@ function BookAParty () {
 
     return (
         <>
-            <div>
-                {data ? <h1>{JSON.stringify(data, null, 2)}</h1> : 'Loading...'}
-            </div>
             <div className="w-screen pt-10 bg-light flex flex-col min-h-screen items-center justify-between relative overflow-hidden">
                 <form onSubmit={handleSubmit} className="border-gray-500 border-2 shadow-2xs bg-light w-1/2 h-full flex flex-col items-center justify-center text-black rounded">
                     <h1 className="border-b-2 border-black w-full px-2">Book a Party</h1>
