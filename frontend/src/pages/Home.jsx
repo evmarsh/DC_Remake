@@ -1,6 +1,8 @@
 import dc from '../assets/Dick-Clarks.jpg';
-import Footer from '../components/Footer';
+import Modal from 'react-modal';
 import ReactImageGallery from 'react-image-gallery';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function Home() {
     const homePageStyle = {
@@ -73,7 +75,7 @@ function Home() {
         <div className="w-full flex flex-col text-center items-center justify-center bg-light py-5 text-black relative overflow-hidden"
         style={aboutPageStyle}>
             <ReactImageGallery items={images} />
-            <button className="text-white mt-5 button">Book a Party</button>
+            <Link to="/book_a_party" text="Book a Party" className='button mt-4'>Book a Party</Link>
         </div>
     </div>
     );
