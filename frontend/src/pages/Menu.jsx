@@ -13,6 +13,7 @@ function Menu () {
         }
     }
 
+    //TODO: need to change to api call
     const menu_pages = [
         "src/assets/menu1.jpg", 
         "src/assets/menu2.jpg",
@@ -33,8 +34,8 @@ function Menu () {
                 <div className="flex flex-row my-2 text-center">
                     <h1 className="">Menu</h1>
                     <div className="flex flex-row col-start-3 text-white">
-                        <button name="regularMenu" className="" onClick={handleButtonClick}>Menu</button>
-                        <button name="cateringMenu" onClick={handleButtonClick}>Catering</button>
+                        <button name="regularMenu" className="button" onClick={handleButtonClick}>Menu</button>
+                        <button name="cateringMenu" className="button" onClick={handleButtonClick}>Catering</button>
                     </div>
                 </div>
                 {regularMenu ? 
@@ -49,7 +50,7 @@ function Menu () {
                             <img key={index} src={page} />
                         </div>
                     ))
-                };
+                }
             </div>
         </>
     );
