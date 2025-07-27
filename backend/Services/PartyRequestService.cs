@@ -1,68 +1,56 @@
-﻿using backend.Models;
+﻿using backend.Data;
+using backend.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace backend.Services
 {
-    public class PartyRequestService : IPartyRequestService
-    {
-        private readonly IPartyRequestRepository _repository;
+	public class PartyRequestService : IPartyRequestService
+	{
+		private readonly ApplicationContextDb _context;
 
-        public PartyRequestService (IPartyRequestRepository repository)
-        {
-            _repository = repository;
-        }
+		public PartyRequestService (ApplicationContextDb context)
+		{
+			_context = context;
+		}
 
-        public List<PartyRequest> GetPartyRequests ()
-        {
-            try
-            {
-                return _repository.GetPartyRequests();
-            }
-            catch
-            {
-                throw;
-            }
-        }
+		public async Task CreatePartyRequest (PartyRequest request)
+		{
+			await _context.AddAsync(request);
+			await _context.SaveChangesAsync();
+			await Task.CompletedTask;
+		}
 
-        public PartyRequest GetPartyById (int id)
-        {
-            try
-            {
-                return _repository.GetPartyRequestById(id);
-            }
-            catch
-            {
+		public async Task<DbSet<PartyRequest>> GetPartyRequestsAsync() =>
+			await Task.FromResult(_context.partyRequests);
 
-                throw;
-            }
-        }
+		public async Task<PartyRequest> GetPartyById(int id) =>
+			await _context.partyRequests.FirstOrDefaultAsync(x => x.Id == id);
 
-        public void AddPartyRequest (PartyRequest request)
-        {
-            _repository.AddPartyRequest(request);
-        }
+		public async Task UpdatePartyRequest (PartyRequest request)
+		{
+			var existing = await _context.partyRequests.FirstOrDefaultAsync(p => p.Id == request.Id);
 
-        public void UpdatePartyRequest (PartyRequest request)
-        {
-            try
-            {
-                _repository.UpdatePartyRequest(request);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
+			if (existing != null)
+			{
+				_context.Remove(request);
+				await _context.AddAsync(request);
+				await _context.SaveChangesAsync();
+			}
+			await Task.CompletedTask;
+		}
 
-        public void DeletePartyRequest(int id)
-        {
-            try
-            {
-                _repository.DeletePartyRequest(id);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-    }
+		public async Task DeletePartyRequest(int id)
+		{
+			var request = await _context.partyRequests.FirstOrDefaultAsync(p => p.Id == id);
+
+			if (request != null)
+			{
+				_context.Remove(request);
+				await _context.SaveChangesAsync();
+				await Task.CompletedTask;
+			}
+
+
+		}
+	}
 }

@@ -1,13 +1,14 @@
 ﻿using backend.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace backend.Services
 {
-    public interface IPartyRequestService
-    {
-        List<PartyRequest> GetPartyRequests();
-        PartyRequest GetPartyById(int id);
-        void AddPartyRequest(PartyRequest request);
-        void UpdatePartyRequest(PartyRequest request);
-        void DeletePartyRequest(int id);
-    }
+	public interface IPartyRequestService
+	{
+		Task CreatePartyRequest(PartyRequest request);
+		Task<DbSet<PartyRequest>> GetPartyRequestsAsync();
+		Task<PartyRequest> GetPartyById(int id);
+		Task UpdatePartyRequest(PartyRequest request);
+		Task DeletePartyRequest(int id);
+	}
 }

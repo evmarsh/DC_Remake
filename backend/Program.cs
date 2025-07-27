@@ -1,4 +1,5 @@
 using backend.Data;
+using backend.Services;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,7 +13,10 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<ApplicationContextDb>();
+builder.Services.AddScoped<IPartyRequestService, PartyRequestService>();
+
+builder.Services.AddDbContext<ApplicationContextDb>(options =>
+options.UseNpgsql(builder.Configuration.GetConnectionString("default")));
 
 var app = builder.Build();
 
