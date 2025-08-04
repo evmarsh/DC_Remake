@@ -19,5 +19,6 @@ namespace backend.Data
         }
 
         public DbSet<PartyRequest> partyRequests { get; set; }
-    }
+		public DbSet<User> Users { get; set; }
+	}
 }
