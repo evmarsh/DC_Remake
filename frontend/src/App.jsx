@@ -5,6 +5,7 @@ import Menu from './pages/Menu'
 import Dashboard from './pages/Dashboard'
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import AppLayout from './components/AppLayout'
+import NotFound from './pages/NotFound'
 
 const App = () => {
   return (
@@ -15,11 +16,11 @@ const App = () => {
         <Route path="menu" element={<Menu />} />
       </Route>
 
-      <Route path="/admin" element={<AppLayout layoutType="admin" className="main-content flex flex-col min-h-screen bg-transparent w-full pt-16 flex-grow" />}>
+      <Route path="/admin" element={<AppLayout layoutType="admin" className="main-content flex flex-col min-h-screen bg-transparent w-full flex-grow" />}>
           <Route index element={<Dashboard />} />
       </Route>
 
-      <Route path="*" element={<div className="text-center text-red-500 justify-center">404 Not Found</div>} />
+      <Route path="*" element={<NotFound className="main-content flex flex-col min-h-screen bg-transparent w-full pt-16 flex-grow"/>} />
     </Routes>
   );
 };
