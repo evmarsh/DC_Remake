@@ -32,8 +32,15 @@ namespace backend.Services
 
 			if (existing != null)
 			{
-				_context.Remove(request);
-				await _context.AddAsync(request);
+				existing.FirstName = request.FirstName;
+				existing.LastName = request.LastName;
+				existing.Email = request.Email;
+				existing.Location = request.Location;
+				existing.NumPeople = request.NumPeople;
+				existing.Date = request.Date;
+				existing.Comments = request.Comments;
+				existing.PhoneNumber = request.PhoneNumber;
+
 				await _context.SaveChangesAsync();
 			}
 			await Task.CompletedTask;

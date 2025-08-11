@@ -87,6 +87,8 @@ function BookAParty () {
         else if (people.value > 200) {
             people.value = 200;
         }
+
+        data.numPeople = people.value;
     }
 
     const formatPhone = () => {
@@ -122,6 +124,7 @@ function BookAParty () {
             }
 
             phone.value = formatted_phone
+            data.phoneNumber = formatted_phone;
         }
     }
 
