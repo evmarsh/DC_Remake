@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\evanm\\Documents\\CS\\DC_Remake\\backend\\backend.csproj": {}
+    "C:\\Users\\kayla\\Documents\\Evan\\DC_Remake\\backend\\backend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\evanm\\Documents\\CS\\DC_Remake\\backend\\backend.csproj": {
+    "C:\\Users\\kayla\\Documents\\Evan\\DC_Remake\\backend\\backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\evanm\\Documents\\CS\\DC_Remake\\backend\\backend.csproj",
+        "projectUniqueName": "C:\\Users\\kayla\\Documents\\Evan\\DC_Remake\\backend\\backend.csproj",
         "projectName": "backend",
-        "projectPath": "C:\\Users\\evanm\\Documents\\CS\\DC_Remake\\backend\\backend.csproj",
-        "packagesPath": "C:\\Users\\evanm\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\evanm\\Documents\\CS\\DC_Remake\\backend\\obj\\",
+        "projectPath": "C:\\Users\\kayla\\Documents\\Evan\\DC_Remake\\backend\\backend.csproj",
+        "packagesPath": "C:\\Users\\kayla\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\kayla\\Documents\\Evan\\DC_Remake\\backend\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\evanm\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\kayla\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -44,7 +44,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.100"
+        "SdkAnalysisLevel": "9.0.200"
       },
       "frameworks": {
         "net9.0": {
@@ -122,7 +122,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -1,12 +1,14 @@
-function SideBarIcon({icon, text="tooltip"}) {
+import { Link } from "react-router-dom"
+
+function SideBarIcon({icon, text="tooltip", path}) {
     return (
-        <div className="sidebar-icon group">
+        <Link to={path} className="sidebar-icon group">
             {icon}
 
             <span class="sidebar-tooltip group-hover:scale-100">
                 {text}
             </span>
-        </div>
+        </Link>
     )
 }
 
