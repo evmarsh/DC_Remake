@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function Dashboard({className}) {  
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,6 +41,8 @@ function Dashboard({className}) {
 
   return (
     <div className={`w-screen h-screen flex flex-col items-center bg-light text-black ${className} sm:pl-15`}>
+      <h1 className="text-2xl mt-4">Party Requests</h1>
+      {error && <p className="text-red-500">Error: {error.message}</p>}
       {loading ? <p>Loading...</p> : 
         <div className="w-full max-w-6xl px-2 sm:px-4 overflow-x-auto">
           <table className="min-w-full mt-3 border-2 border-gray-300 rounded-lg shadow-lg bg-white text-sm sm:text-base">
@@ -56,8 +60,8 @@ function Dashboard({className}) {
             </thead>
             <tbody>
               {data.map((item, index) => (
-                <tr key={index} className="even:bg-gray-50">
-                  <td className="px-2 sm:px-4 py-2 border-b"><Link to={`/admin/party_requests/${item.id}`}>{item.id}</Link></td>
+                <tr key={index} className="even:bg-gray-50 hover:cursor-pointer hover:bg-gray-300" onClick={() => navigate(`/admin/party_requests/${item.id}`)}>
+                  <td className="px-2 sm:px-4 py-2 border-b">{item.id}</td>
                   <td className="px-2 sm:px-4 py-2 border-b">{item.firstName} {item.lastName}</td>
                   <td className="px-2 sm:px-4 py-2 border-b">{item.email}</td>
                   <td className="px-2 sm:px-4 py-2 border-b">{item.phoneNumber}</td>
