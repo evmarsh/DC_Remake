@@ -28,7 +28,7 @@ function BookAParty () {
         let form_is_valid = validateForm();
 
         if (form_is_valid) {
-            fetch('/api/partyRequest', {
+            fetch('/api/partyRequests', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
