@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard'
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import AppLayout from './components/AppLayout'
 import NotFound from './pages/NotFound'
+import PartyRequest from './pages/PartyRequest'
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
 
       <Route path="/admin" element={<AppLayout layoutType="admin" className="main-content flex flex-col min-h-screen bg-transparent w-full flex-grow" />}>
           <Route index element={<Dashboard />} />
+          <Route path="party_requests/:id" element={<PartyRequest />} />
       </Route>
 
       <Route path="*" element={<NotFound className="main-content flex flex-col min-h-screen bg-transparent w-full pt-16 flex-grow"/>} />

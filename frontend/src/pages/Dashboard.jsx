@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 function Dashboard({className}) {  
   const [data, setData] = useState([]);
@@ -37,34 +38,38 @@ function Dashboard({className}) {
   }; 
 
   return (
-    <div className={`w-screen h-screen flex flex-col items-center bg-light text-black ${className}`}>
+    <div className={`w-screen h-screen flex flex-col items-center bg-light text-black ${className} sm:pl-15`}>
       {loading ? <p>Loading...</p> : 
-        <table className="items-center justify-center mt-3 border-2 p-3">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Phone Number</th>
-              <th>Date</th>
-              <th># of People</th>
-              <th>Location</th>
-              <th>Comments</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((item, index) => (
-              <tr key={index}>
-                <td>{item.firstName} {item.lastName}</td>
-                <td>{item.email}</td>
-                <td>{item.phoneNumber}</td>
-                <td>{formatDate(item.date)}</td>
-                <td>{item.numPeople}</td>
-                <td>{item.location}</td>
-                <td>{item.comments}</td>
+        <div className="w-full max-w-6xl px-2 sm:px-4 overflow-x-auto">
+          <table className="min-w-full mt-3 border-2 border-gray-300 rounded-lg shadow-lg bg-white text-sm sm:text-base">
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="px-2 sm:px-4 py-2 border-b text-left whitespace-nowrap">Id</th>
+                <th className="px-2 sm:px-4 py-2 border-b text-left whitespace-nowrap">Name</th>
+                <th className="px-2 sm:px-4 py-2 border-b text-left whitespace-nowrap">Email</th>
+                <th className="px-2 sm:px-4 py-2 border-b text-left whitespace-nowrap">Phone Number</th>
+                <th className="px-2 sm:px-4 py-2 border-b text-left whitespace-nowrap">Date</th>
+                <th className="px-2 sm:px-4 py-2 border-b text-left whitespace-nowrap"># of People</th>
+                <th className="px-2 sm:px-4 py-2 border-b text-left whitespace-nowrap">Location</th>
+                <th className="px-2 sm:px-4 py-2 border-b text-left whitespace-nowrap">Comments</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {data.map((item, index) => (
+                <tr key={index} className="even:bg-gray-50">
+                  <td className="px-2 sm:px-4 py-2 border-b"><Link to={`/admin/party_requests/${item.id}`}>{item.id}</Link></td>
+                  <td className="px-2 sm:px-4 py-2 border-b">{item.firstName} {item.lastName}</td>
+                  <td className="px-2 sm:px-4 py-2 border-b">{item.email}</td>
+                  <td className="px-2 sm:px-4 py-2 border-b">{item.phoneNumber}</td>
+                  <td className="px-2 sm:px-4 py-2 border-b">{formatDate(item.date)}</td>
+                  <td className="px-2 sm:px-4 py-2 border-b">{item.numPeople}</td>
+                  <td className="px-2 sm:px-4 py-2 border-b">{item.location}</td>
+                  <td className="px-2 sm:px-4 py-2 border-b">{item.comments.length > 30 ? item.comments.substring(0, 30) + "..." : item.comments}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       }
     </div>
   );

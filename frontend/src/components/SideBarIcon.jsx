@@ -5,7 +5,7 @@ function SideBarIcon({icon, text="tooltip", path}) {
         <Link to={path} className="sidebar-icon group">
             {icon}
 
-            <span class="sidebar-tooltip group-hover:scale-100">
+            <span className="sidebar-tooltip group-hover:scale-100">
                 {text}
             </span>
         </Link>
