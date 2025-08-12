@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import NavBarItem from './NavBarItem'; // Ensure this path is correct
 import { Link } from 'react-router-dom';
+import DropdownNavBarItem from './DropdownNavBarItem';
 
 function NavBar() {
     const [isOpen, setIsOpen] = useState(false); // State to control menu visibility
@@ -39,18 +40,6 @@ function NavBar() {
                     )}
                 </button>
 
-                {/* Navigation Items Container */}
-                {/*
-                    On mobile:
-                    - 'flex-col' stacks items vertically
-                    - 'absolute top-16 right-0 w-48' positions the menu below the navbar
-                    - 'bg-dark' gives it a background
-                    - 'p-4' adds padding to the internal menu items
-                    - `hidden` by default, but `flex` when `isOpen` is true
-                    - `md:flex md:flex-row md:static md:w-auto` makes it a horizontal row on medium and larger screens,
-                      resets positioning, and auto-widths it.
-                    - `md:bg-transparent md:p-0 md:shadow-none` clears mobile styling on desktop.
-                */}
                 <div className={`
                     ${isOpen ? 'flex' : 'hidden'}
                     flex-col absolute top-16 right-0 w-48 bg-dark p-4 rounded-b-lg shadow-lg
@@ -58,7 +47,14 @@ function NavBar() {
                 `}>
                     <NavBarItem to="/menu" text="Menu" onClick={toggleMenu} />
                     <NavBarItem to="/book_a_party" text="Book a Party" onClick={toggleMenu} />
-                    <NavBarItem to="/" text="Order Online" onClick={toggleMenu} />
+                    <DropdownNavBarItem
+                    text="Order Online"
+                    items={[
+                        { text: "Uber Eats", to: "https://www.ubereats.com/store/dick-clarks-family-restaurant/LtUoSCBIWNivm6_vTPg5nA", external: true },
+                        { text: "DoorDash", to: "https://order.online/store/dick-clark's-family-restaurant-princeton-24897238/?hideModal=true&pickup=true&redirected=true", external: true },
+                    ]}
+                    onClick={toggleMenu}
+                    /> 
                 </div>
             </div>
         </div>

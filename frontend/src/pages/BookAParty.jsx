@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import Modal from "react-modal";
 import { useNavigate } from "react-router-dom";
+import { setHours, setMinutes } from 'date-fns';
 import "react-datepicker/dist/react-datepicker.css";
 
 function BookAParty() {
@@ -25,6 +26,17 @@ function BookAParty() {
     location: "Party Room",
     comments: ""
   });
+
+  // Add state for minTime and maxTime
+  const [minTime, setMinTime] = useState(null);
+  const [maxTime, setMaxTime] = useState(null);
+
+  // Placeholder: set minTime and maxTime (simulate API call)
+  useEffect(() => {
+    // Sets minTime non-inclusive
+    setMinTime(setHours(setMinutes(new Date(), 0), 10));
+    setMaxTime(setHours(setMinutes(new Date(), 0), 21));
+  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -100,11 +112,11 @@ function BookAParty() {
   return (
     <>
       <div className="w-screen min-h-screen flex flex-col items-center justify-center bg-light text-black py-10">
+        <h1 className="text-2xl font-bold mb-2 pb-2">Book a Party</h1>
         <form
           onSubmit={handleSubmit}
-          className="max-w-md w-full bg-white p-6 rounded shadow flex flex-col gap-4"
+          className="max-w-md w-full bg-light p-6 rounded shadow flex flex-col gap-4 border-2 border-black"
         >
-          <h1 className="text-2xl font-bold mb-2 border-b-2 border-black pb-2">Book a Party</h1>
           <div className="flex gap-4">
             <div className="flex flex-col flex-1">
               <label className="font-semibold mb-1">First Name</label>
@@ -113,7 +125,7 @@ function BookAParty() {
                 type="text"
                 name="firstName"
                 placeholder="First Name"
-                className="border border-black rounded-xl px-3 py-2"
+                className="border border-black rounded-xl px-3 py-2 bg-white"
                 value={data.firstName}
                 onChange={handleChange}
               />
@@ -125,7 +137,7 @@ function BookAParty() {
                 type="text"
                 name="lastName"
                 placeholder="Last Name"
-                className="border border-black rounded-xl px-3 py-2"
+                className="border border-black rounded-xl px-3 py-2 bg-white"
                 value={data.lastName}
                 onChange={handleChange}
               />
@@ -139,7 +151,7 @@ function BookAParty() {
                 type="email"
                 name="email"
                 placeholder="email@example.com"
-                className="border border-black rounded-xl px-3 py-2"
+                className="border border-black rounded-xl px-3 py-2 bg-white"
                 value={data.email}
                 onChange={handleChange}
               />
@@ -151,7 +163,7 @@ function BookAParty() {
                 type="tel"
                 name="phoneNumber"
                 placeholder="###-###-####"
-                className="border border-black rounded-xl px-3 py-2"
+                className="border border-black rounded-xl px-3 py-2 bg-white"
                 value={data.phoneNumber}
                 onChange={handleChange}
                 onBlur={formatPhone}
@@ -162,11 +174,14 @@ function BookAParty() {
             <label className="font-semibold mb-1">Date & Time</label>
             <DatePicker
               required
-              className="border border-black rounded-xl px-3 py-2"
+              className="border border-black rounded-xl px-3 py-2 bg-white"
               showTimeSelect
               dateFormat="Pp"
               selected={data.date}
               onChange={(date) => setData(prev => ({ ...prev, date }))}
+              minDate={new Date()}
+              minTime={minTime}
+              maxTime={maxTime}
             />
           </div>
           <div className="flex gap-4">
@@ -178,7 +193,7 @@ function BookAParty() {
                 name="numPeople"
                 min="8"
                 max="200"
-                className="border border-black rounded-xl px-3 py-2"
+                className="border border-black rounded-xl px-3 py-2 bg-white"
                 value={data.numPeople}
                 onChange={handleChange}
                 onBlur={checkNumPeople}
@@ -189,7 +204,7 @@ function BookAParty() {
               <select
                 required
                 name="location"
-                className="border border-black rounded-xl px-3 py-2"
+                className="border border-black rounded-xl px-3 py-2 bg-white"
                 value={data.location}
                 onChange={handleChange}
               >
@@ -205,12 +220,12 @@ function BookAParty() {
               name="comments"
               placeholder="Additional Comments (Max 250 characters)"
               maxLength={250}
-              className="border border-black rounded-xl px-3 py-2"
+              className="border border-black rounded-xl px-3 py-2 bg-white"
               value={data.comments}
               onChange={handleChange}
             />
           </div>
-          <button type="submit" className="text-white bg-dark hover:bg-gray-800 rounded px-4 py-2 mt-2">
+          <button type="submit" className="text-white bg-dark hover:bg-gray-800 rounded px-4 py-2 mt-2 hover:cursor-pointer">
             Submit
           </button>
         </form>
@@ -242,7 +257,7 @@ function BookAParty() {
         }}
       >
         <h2 className="text-lg font-semibold mb-4">Party Request Submitted!</h2>
-        <p>Your party request has been received. We will contact you soon.</p>
+        <p>Your party request has been received. We hope to see you soon!</p>
         <button
           className="mt-6 px-4 py-2 rounded bg-dark text-white hover:bg-gray-800"
           onClick={handleCloseModal}
