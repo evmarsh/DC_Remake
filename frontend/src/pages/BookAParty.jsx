@@ -7,6 +7,10 @@ import "react-datepicker/dist/react-datepicker.css";
 
 function BookAParty() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [openHours, setOpenHours] = useState([]);
+    // Add state for minTime and maxTime
+  const [minTime, setMinTime] = useState(null);
+  const [maxTime, setMaxTime] = useState(null);
   const navigate = useNavigate();
 
   const handleOpenModal = () => setModalIsOpen(true);
@@ -27,16 +31,33 @@ function BookAParty() {
     comments: ""
   });
 
-  // Add state for minTime and maxTime
-  const [minTime, setMinTime] = useState(null);
-  const [maxTime, setMaxTime] = useState(null);
-
-  // Placeholder: set minTime and maxTime (simulate API call)
   useEffect(() => {
-    // Sets minTime non-inclusive
-    setMinTime(setHours(setMinutes(new Date(), 0), 10));
-    setMaxTime(setHours(setMinutes(new Date(), 0), 21));
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/api/hours");
+        const data = await response.json();
+        setOpenHours(data);
+        if (data.length > 0) {
+          console.log("First isActive:", data[0].isActive);
+        }
+      } catch (error) {
+        console.log("Error fetching hours:", error);
+      }
+    }
+
+    fetchData();
   }, []);
+
+    //TODO: Create a function to handle changing open and close times depending on what day is selected
+    
+  useEffect(() => {
+    if (openHours.length > 0) {
+      
+      // Sets minTime non-inclusive
+      setMinTime(setHours(setMinutes(new Date(), 0), 10));
+      setMaxTime(setHours(setMinutes(new Date(), 0), 21));
+    }
+  }, [openHours]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
