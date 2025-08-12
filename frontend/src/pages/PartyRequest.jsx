@@ -23,6 +23,8 @@ function PartyRequest() {
           throw new Error(`HTTP error! Status:" ${response.status}`);
         }
         const fetch_data = await response.json();
+        // Convert date string to Date object
+        fetch_data.date = fetch_data.date ? new Date(fetch_data.date) : null;
         setData(fetch_data);
       } catch (err) {
         setError(err);
@@ -221,8 +223,8 @@ function PartyRequest() {
           <div className="mb-4">
             <label className="block font-semibold mb-1">Date:</label>
             <DatePicker
-              selected={startDate}
-              onChange={(date) => setStartDate(date)}
+              selected={data.date}
+              onChange={(date) => setData((prev) => ({ ...prev, date }))}
               className="w-full border px-3 py-2 rounded bg-gray-100"
               dateFormat="Pp"
               showTimeSelect
