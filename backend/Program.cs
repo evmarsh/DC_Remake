@@ -19,6 +19,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IPartyRequestService, PartyRequestService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITimeSlotService, TimeSlotService>();
+builder.Services.AddScoped<IHoursService, HoursService>();
 
 builder.Services.AddDbContext<ApplicationContextDb>(options =>
 options.UseNpgsql(builder.Configuration.GetConnectionString("default")));

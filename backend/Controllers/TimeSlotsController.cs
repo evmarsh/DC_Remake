@@ -70,7 +70,7 @@ namespace backend.Controllers
         [HttpPost]
         public async Task<ActionResult<TimeSlot>> PostTimeSlot(TimeSlot timeSlot)
         {
-            _timeSlotService.CreateTimeSlot(timeSlot);
+            await _timeSlotService.CreateTimeSlot(timeSlot);
 
             return CreatedAtAction("GetTimeSlot", new { id = timeSlot.Id }, timeSlot);
         }
