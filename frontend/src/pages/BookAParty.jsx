@@ -19,13 +19,16 @@ function BookAParty() {
     navigate("/");
   }
 
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+
   const [data, setData] = useState({
     id: 0,
     firstName: "",
     lastName: "",
     email: "",
     phoneNumber: "",
-    date: new Date(),
+    date: tomorrow, // <-- Now tomorrow is selected by default
     numPeople: 8,
     location: "Party Room",
     comments: ""
@@ -37,9 +40,6 @@ function BookAParty() {
         const response = await fetch("/api/hours");
         const data = await response.json();
         setOpenHours(data);
-        if (data.length > 0) {
-          console.log("First isActive:", data[0].isActive);
-        }
       } catch (error) {
         console.log("Error fetching hours:", error);
       }
@@ -48,16 +48,93 @@ function BookAParty() {
     fetchData();
   }, []);
 
-    //TODO: Create a function to handle changing open and close times depending on what day is selected
-    
   useEffect(() => {
-    if (openHours.length > 0) {
-      
-      // Sets minTime non-inclusive
+    if (openHours.length > 0 && data.date) {
+      updateTimeRange(data.date);
+    } else if (data.date) {
+      // Set default times if no hours are loaded
       setMinTime(setHours(setMinutes(new Date(), 0), 10));
       setMaxTime(setHours(setMinutes(new Date(), 0), 21));
     }
+    // eslint-disable-next-line
   }, [openHours]);
+
+  const updateTimeRange = (date) => {
+    if (!date) return;
+    let tempDate = new Date(date);
+    const selectedDay = tempDate.getDay();
+    setData(prev => ({ ...prev, date }));
+
+    let day = "";
+    switch (selectedDay) {
+      case 0: day = "sunday"; break;
+      case 1: day = "monday"; break;
+      case 2: day = "tuesday"; break;
+      case 3: day = "wednesday"; break;
+      case 4: day = "thursday"; break;
+      case 5: day = "friday"; break;
+      case 6: day = "saturday"; break;
+      default: break;
+    }
+
+    if (!openHours || openHours.length === 0) {
+      // Fallback default times
+      setMinTime(setHours(setMinutes(new Date(), 0), 10));
+      setMaxTime(setHours(setMinutes(new Date(), 0), 21));
+      return;
+    }
+
+    const hours = openHours.find(hour => hour.isActive);
+
+    if (!hours || !hours[day]) {
+      setMinTime(setHours(setMinutes(new Date(), 0), 10));
+      setMaxTime(setHours(setMinutes(new Date(), 0), 21));
+      return;
+    }
+
+    let openTime = hours[day].openTime;
+    let closeTime = hours[day].closeTime;
+
+    if (openTime !== "Closed" && closeTime !== "Closed") {
+      let openTimeParts = openTime.split(":");
+      let closeTimeParts = closeTime.split(":");
+
+      if (openTimeParts[1] === "30") {
+        openTimeParts[1] = "00";
+      } else {
+        openTimeParts[1] = "30";
+        openTimeParts[0] = String(Number(openTimeParts[0]) - 1);
+      }
+
+      if (closeTimeParts[1] === "30") {
+        closeTimeParts[1] = "00";
+      } else {
+        closeTimeParts[1] = "30";
+        closeTimeParts[0] = String(Number(closeTimeParts[0]) - 1);
+      }
+
+      setMinTime(
+        setHours(
+          setMinutes(new Date(), parseInt(openTimeParts[1])),
+          parseInt(openTimeParts[0])
+        )
+      );
+      setMaxTime(
+        setHours(
+          setMinutes(new Date(), parseInt(closeTimeParts[1])),
+          parseInt(closeTimeParts[0])
+        )
+      );
+    } else {
+      setMinTime(null);
+      setMaxTime(null);
+    }
+  };
+
+  const setMinDate = () => {
+    let date = new Date();
+    return date.getDate() + 1;
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -199,11 +276,15 @@ function BookAParty() {
               showTimeSelect
               dateFormat="Pp"
               selected={data.date}
-              onChange={(date) => setData(prev => ({ ...prev, date }))}
-              minDate={new Date()}
+              onChange={updateTimeRange}
+              minDate={new Date(Date.now() + 24 * 60 * 60 * 1000)}
               minTime={minTime}
               maxTime={maxTime}
+              filterTime={minTime && maxTime ? undefined : () => false} // disables all times if closed
             />
+            {minTime === null && maxTime === null && (
+              <span className="text-red-600 text-sm mt-1">No times available for this day (Closed)</span>
+            )}
           </div>
           <div className="flex gap-4">
             <div className="flex flex-col flex-1">

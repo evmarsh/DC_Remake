@@ -40,6 +40,16 @@ namespace backend.Services
                 existing.ThursdayId = hours.ThursdayId;
                 existing.FridayId = hours.FridayId;
                 existing.SaturdayId = hours.SaturdayId;
+
+                if (hours.IsActive == true)
+                {
+                    var activeHours = await _context.Hours.FirstOrDefaultAsync(h => h.IsActive && h.Id != hours.Id);
+                    if (activeHours != null)
+                    {
+                        activeHours.IsActive = false;
+                    }
+                }
+
                 await _context.SaveChangesAsync();
             }
             await Task.CompletedTask;
@@ -63,6 +73,17 @@ namespace backend.Services
                 _context.Entry(hours.Saturday).State = EntityState.Unchanged;
 
             _context.Hours.Add(hours);
+
+
+            if (hours.IsActive == true)
+            {
+                var activeHours = await _context.Hours.FirstOrDefaultAsync(h => h.IsActive);
+                if (activeHours != null)
+                {
+                    activeHours.IsActive = false;
+                }
+            }
+
             await _context.SaveChangesAsync();
             await Task.CompletedTask;
         }
