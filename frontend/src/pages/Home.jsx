@@ -1,10 +1,27 @@
 import dc from '../assets/Dick-Clarks.jpg';
-import Modal from 'react-modal';
 import ReactImageGallery from 'react-image-gallery';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 function Home() {
+    const [hours, setHours] = useState([]);
+
+    const days = [
+        "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"
+    ];
+
+    useEffect(() => {
+        const fetchHours = async () => {
+            const response = await fetch('/api/hours');
+            const data = await response.json();
+            console.log(data[0].sunday);
+            setHours(data);
+        };
+        fetchHours();
+    }, []);
+
+    const activeHours = hours.find(h => h.isActive);
+
     const homePageStyle = {
         background: 'linear-gradient(to bottom, var(--color-dark) 60%, var(--color-light) 40%',
     };
@@ -28,6 +45,14 @@ function Home() {
     },
     ];
 
+    const formatTime = (timeStr) => {
+        if (!timeStr || timeStr === "Closed") return timeStr;
+        const [hour, minute] = timeStr.split(":").map(Number);
+        const date = new Date();
+        date.setHours(hour, minute, 0, 0);
+        return date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true });
+    };
+
     return (
     <div>
         <div className="w-full flex flex-col items-center justify-center relative overflow-hidden"
@@ -38,9 +63,13 @@ function Home() {
             <div className='flex flex-col text-black mx-5'>
                 <div className='my-2'>
                     <h1 className="text-2xl py-1">Hours</h1>
-                    <p>Sunday: 10:30 a.m. - 8:00 p.m.</p>
-                    <p>Monday - Thursday: 10:30 a.m. - 8:30 p.m.</p>
-                    <p>Friday - Saturday: 10:30 a.m. - 9:00 p.m.</p>
+                    {days.map(day => {
+                        return (
+                            <p key={day}>
+                                {day.charAt(0).toUpperCase() + day.slice(1)}: {activeHours ? <span>{formatTime(activeHours[day].openingTime)} - {formatTime(activeHours[day].closingTime)}</span> : <span>Closed</span>}
+                            </p>
+                        );
+                    })}
                 </div>
                 <div className='my-2'>
                     <h1 className="text-2xl py-1">Location</h1>
@@ -50,7 +79,7 @@ function Home() {
                 </div>
                 <div className='my-2'>
                     <h1 className="text-2xl py-1">Contact</h1>
-                    <a href="tel:+1 812-385-3131">(812) 385-3131</a>
+                    <a href="tel:+1 812-385-3131" className='underline'>(812) 385-3131</a>
                 </div>
             </div>
             <div className='pb-5 mx-5'>
