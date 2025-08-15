@@ -8,8 +8,11 @@ import AppLayout from './components/AppLayout'
 import NotFound from './pages/NotFound'
 import PartyRequest from './pages/PartyRequest'
 import Hours from './pages/Hours'
+import Modal from 'react-modal';
 
 const App = () => {
+  Modal.setAppElement("#root");
+  
   return (
     <Routes>
       <Route path="/" element={<AppLayout layoutType="default" className="main-content flex flex-col min-h-screen bg-transparent w-full pt-16 flex-grow" />}>
