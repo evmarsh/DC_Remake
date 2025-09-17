@@ -16,6 +16,12 @@ function Hours() {
   const [newTimeslot, setNewTimeslot] = useState({ openTime: "", closeTime: "" });
   const [error, setError] = useState("");
 
+  const [hoursModalOpen, setHoursModalOpen] = useState(false);
+  const [newHours, setNewHours] = useState(
+    days.reduce((acc, day) => ({ ...acc, [day]: "" }), {})
+  );
+  const [hoursError, setHoursError] = useState("");
+
   useEffect(() => {
     const fetchHours = async () => {
       try {
@@ -63,6 +69,13 @@ function Hours() {
     setModalOpen(true);
   };
   const closeModal = () => setModalOpen(false);
+
+  const openHoursModal = () => {
+    setNewHours(days.reduce((acc, day) => ({ ...acc, [day]: "" }), {}));
+    setHoursError("");
+    setHoursModalOpen(true);
+  };
+  const closeHoursModal = () => setHoursModalOpen(false);
 
   // Handle input changes in modal
   const handleInputChange = (e) => {
@@ -139,6 +152,41 @@ function Hours() {
     }
   };
 
+  const handleHoursSelect = (day, timeslotId) => {
+    setNewHours(prev => ({ ...prev, [day]: timeslotId }));
+  };
+
+  const handleCreateHours = async (e) => {
+    e.preventDefault();
+    // Validate all days have a selection
+    if (days.some(day => !newHours[day])) {
+      setHoursError("Please select a timeslot for each day.");
+      return;
+    }
+    // Build the hours object
+    const hoursObj = {};
+    hoursObj.isActive = false; // New hours are not active by default
+    days.forEach(day => {
+      const slot = timeslots.find(ts => ts.id === parseInt(newHours[day]));
+      let dayId = day + "Id";
+      hoursObj[dayId] = parseInt(newHours[day]);
+    });
+    console.log("Creating hours: ", hoursObj);
+    try {
+      const response = await fetch("/api/hours", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(hoursObj),
+      });
+      if (!response.ok) throw new Error("Failed to create hours");
+      const created = await response.json();
+      setHours(prev => [...prev, created]);
+      closeHoursModal();
+    } catch (err) {
+      setHoursError("Error creating hours.");
+    }
+  };
+
   return (
     <div className="w-screen min-h-screen flex flex-col items-center bg-light text-black py-10">
       <h1 className="text-2xl mb-6">Hours</h1>
@@ -196,12 +244,23 @@ function Hours() {
               })}
             </tbody>
           </table>
-          <button
-            className="mt-4 px-4 py-2 bg-dark text-white rounded hover:bg-dark/80 transition hover:cursor-pointer"
-            onClick={() => {/* handle create new hours */}}
-          >
-            Create New Hours
-          </button>
+          <div className="mt-4 flex gap-2">
+            <button
+              className="px-4 py-2 bg-dark text-white rounded hover:bg-dark/80 transition hover:cursor-pointer"
+              onClick={openHoursModal}
+            >
+              Create New Hours
+            </button>
+            <button
+              className="px-4 py-2 bg-dark text-white rounded hover:bg-dark/80 transition hover:cursor-pointer"
+              onClick={() => {
+                // TODO: Open modal or dropdown to select active hours
+                alert("Select Active Hours clicked!");
+              }}
+            >
+              Select Active Hours
+            </button>
+          </div>
         </div>
       </div>
       {/* Modal for creating new timeslot */}
@@ -356,6 +415,70 @@ function Hours() {
                 Save
               </button>
             </div>
+          </div>
+        </form>
+      </Modal>
+      <Modal
+        isOpen={hoursModalOpen}
+        onRequestClose={closeHoursModal}
+        contentLabel="Create New Hours"
+        style={{
+          overlay: {
+            backgroundColor: "rgba(0,0,0,0.5)",
+            zIndex: 1000
+          },
+          content: {
+            maxWidth: "400px",
+            margin: "auto",
+            inset: "50% auto auto 50%",
+            transform: "translate(-50%, -50%)",
+            borderRadius: "0.5rem",
+            padding: "2rem",
+            background: "#fff",
+            color: "#111",
+            boxShadow: "0 2px 16px rgba(0,0,0,0.2)",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "stretch"
+          }
+        }}
+      >
+        <h2 className="text-lg font-semibold mb-4">Create New Hours</h2>
+        <form onSubmit={handleCreateHours} className="flex flex-col gap-4">
+          {days.map(day => (
+            <div key={day}>
+              <label className="block font-semibold mb-1 capitalize">{day}</label>
+              <select
+                className="w-full border px-3 py-2 rounded bg-gray-100"
+                value={newHours[day]}
+                onChange={e => handleHoursSelect(day, e.target.value)}
+                required
+              >
+                <option value="">Select timeslot</option>
+                {timeslots.map(ts => (
+                  <option key={ts.id} value={ts.id}>
+                    {formatTime(ts.openTime)} - {formatTime(ts.closeTime)}
+                  </option>
+                ))}
+              </select>
+            </div>
+          ))}
+          {hoursError && <div className="text-red-600">{hoursError}</div>}
+          <div className="flex justify-end gap-2">
+            <button
+              type="button"
+              className="px-4 py-2 rounded bg-gray-500 text-white hover:bg-gray-400 hover:cursor-pointer"
+              onClick={closeHoursModal}
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="px-4 py-2 rounded bg-dark text-white hover:bg-dark/80 hover:cursor-pointer"
+            >
+              Create
+            </button>
           </div>
         </form>
       </Modal>

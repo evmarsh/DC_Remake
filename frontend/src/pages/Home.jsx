@@ -14,7 +14,6 @@ function Home() {
         const fetchHours = async () => {
             const response = await fetch('/api/hours');
             const data = await response.json();
-            console.log("Day: ", data[days[0]]);
             setHours(data);
         };
         fetchHours();
@@ -63,16 +62,20 @@ function Home() {
             <div className='flex flex-col text-black mx-5'>
                 <div className='my-2'>
                     <h1 className="text-2xl py-1">Hours</h1>
-                    {days.map(day => {
-                        const dayHours = activeHours && activeHours[day];
-                        return (
-                            <p key={day} className='capitalize'>
-                                {day}: {dayHours && dayHours.openingTime && dayHours.closingTime
-                                    ? <span>{formatTime(dayHours.openingTime)} - {formatTime(dayHours.closingTime)}</span>
-                                    : <span>Closed</span>}
-                            </p>
-                        );
-                    })}
+                    {activeHours ? (
+                        days.map(day => {
+                            const dayHours = activeHours[day];
+                            return (
+                                <p key={day} className='capitalize'>
+                                    {day}: {dayHours && dayHours.openTime && dayHours.closeTime
+                                        ? <span>{formatTime(dayHours.openTime)} - {formatTime(dayHours.closeTime)}</span>
+                                        : <span>10:30 AM - 9:00 PM</span>}
+                                </p>
+                            );
+                        })
+                    ) : (
+                        <p>Loading hours...</p>
+                    )}
                 </div>
                 <div className='my-2'>
                     <h1 className="text-2xl py-1">Location</h1>

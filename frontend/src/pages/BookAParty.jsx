@@ -210,7 +210,7 @@ function BookAParty() {
   return (
     <>
       <div className="w-screen min-h-screen flex flex-col items-center justify-center bg-light text-black py-10">
-        <h1 className="text-2xl font-bold mb-2 pb-2">Book a Party</h1>
+        <h1 className="text-2xl mb-2 pb-2">Book a Party</h1>
         <form
           onSubmit={handleSubmit}
           className="max-w-md w-full bg-light p-6 rounded shadow flex flex-col gap-4 border-2 border-black"
