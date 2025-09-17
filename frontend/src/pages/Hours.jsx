@@ -22,6 +22,10 @@ function Hours() {
   );
   const [hoursError, setHoursError] = useState("");
 
+  const [selectHoursModalOpen, setSelectHoursModalOpen] = useState(false);
+  const [selectedHoursId, setSelectedHoursId] = useState("");
+  const [selectHoursError, setSelectHoursError] = useState("");
+
   useEffect(() => {
     const fetchHours = async () => {
       try {
@@ -76,6 +80,13 @@ function Hours() {
     setHoursModalOpen(true);
   };
   const closeHoursModal = () => setHoursModalOpen(false);
+
+  const openSelectHoursModal = () => {
+    setSelectedHoursId("");
+    setSelectHoursError("");
+    setSelectHoursModalOpen(true);
+  };
+  const closeSelectHoursModal = () => setSelectHoursModalOpen(false);
 
   // Handle input changes in modal
   const handleInputChange = (e) => {
@@ -187,6 +198,45 @@ function Hours() {
     }
   };
 
+  const handleSelectHours = (e) => {
+    setSelectedHoursId(e.target.value);
+  };
+
+  const handleActivateHours = async (e) => {
+    e.preventDefault();
+    if (!selectedHoursId) {
+      setSelectHoursError("Please select a set of hours.");
+      return;
+    }
+    try {
+      // Find the selected hours object
+      const selected = hours.find(h => h.id === parseInt(selectedHoursId));
+      if (!selected) {
+        setSelectHoursError("Selected hours not found.");
+        return;
+      }
+      const updatedHours = { id: selected.id, isActive: true };
+      days.forEach(day => {
+        const dayId = day + "Id";
+        updatedHours[dayId] = timeslots.find(ts => ts.openTime === selected[day].openTime && ts.closeTime === selected[day].closeTime).id;
+      });
+
+      console.log("Activating hours: ", updatedHours);
+      const response = await fetch(`/api/hours/${selectedHoursId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedHours),
+      });
+      if (!response.ok) throw new Error("Failed to activate hours");
+      // Refresh hours list
+      const refreshed = await fetch("/api/hours").then(res => res.json());
+      setHours(refreshed);
+      closeSelectHoursModal();
+    } catch (err) {
+      setSelectHoursError("Error activating hours.");
+    }
+  };
+
   return (
     <div className="w-screen min-h-screen flex flex-col items-center bg-light text-black py-10">
       <h1 className="text-2xl mb-6">Hours</h1>
@@ -253,10 +303,7 @@ function Hours() {
             </button>
             <button
               className="px-4 py-2 bg-dark text-white rounded hover:bg-dark/80 transition hover:cursor-pointer"
-              onClick={() => {
-                // TODO: Open modal or dropdown to select active hours
-                alert("Select Active Hours clicked!");
-              }}
+              onClick={openSelectHoursModal}
             >
               Select Active Hours
             </button>
@@ -478,6 +525,83 @@ function Hours() {
               className="px-4 py-2 rounded bg-dark text-white hover:bg-dark/80 hover:cursor-pointer"
             >
               Create
+            </button>
+          </div>
+        </form>
+      </Modal>
+      <Modal
+        isOpen={selectHoursModalOpen}
+        onRequestClose={closeSelectHoursModal}
+        contentLabel="Select Active Hours"
+        style={{
+          overlay: {
+            backgroundColor: "rgba(0,0,0,0.5)",
+            zIndex: 1000
+          },
+          content: {
+            maxWidth: "400px",
+            margin: "auto",
+            inset: "50% auto auto 50%",
+            transform: "translate(-50%, -50%)",
+            borderRadius: "0.5rem",
+            padding: "2rem",
+            background: "#fff",
+            color: "#111",
+            boxShadow: "0 2px 16px rgba(0,0,0,0.2)",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "stretch"
+          }
+        }}
+      >
+        <h2 className="text-lg font-semibold mb-4">Select Active Hours</h2>
+        <form onSubmit={handleActivateHours} className="flex flex-col gap-4">
+          <label className="block font-semibold mb-1">Hours ID</label>
+          <select
+            className="w-full border px-3 py-2 rounded bg-gray-100"
+            value={selectedHoursId}
+            onChange={handleSelectHours}
+            required
+          >
+            <option value="">Select hours ID</option>
+            {hours.map(h => (
+              <option key={h.id} value={h.id}>
+                ID {h.id} {h.isActive ? "(Active)" : ""}
+              </option>
+            ))}
+          </select>
+          {selectedHoursId && (
+            <div className="bg-gray-50 p-2 rounded text-sm">
+              <strong>Preview:</strong>
+              <ul>
+                {days.map(day => (
+                  <li key={day} className="capitalize">
+                    {day}:{" "}
+                    {(() => {
+                      const h = hours.find(hr => hr.id === parseInt(selectedHoursId));
+                      if (!h || !h[day]) return "Closed";
+                      return `${formatTime(h[day].openTime)} - ${formatTime(h[day].closeTime)}`;
+                    })()}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {selectHoursError && <div className="text-red-600">{selectHoursError}</div>}
+          <div className="flex justify-end gap-2">
+            <button
+              type="button"
+              className="px-4 py-2 rounded bg-gray-500 text-white hover:bg-gray-400 hover:cursor-pointer"
+              onClick={closeSelectHoursModal}
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="px-4 py-2 rounded bg-dark text-white hover:bg-dark/80 hover:cursor-pointer"
+            >
+              Set Active
             </button>
           </div>
         </form>
