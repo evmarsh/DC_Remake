@@ -253,5 +253,11 @@ C:\Users\evanm\Documents\CS\DC_Remake\backend\bin\Release\net9.0\ru\Microsoft.Co
 C:\Users\evanm\Documents\CS\DC_Remake\backend\bin\Release\net9.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 C:\Users\evanm\Documents\CS\DC_Remake\backend\bin\Release\net9.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 C:\Users\evanm\Documents\CS\DC_Remake\backend\bin\Release\net9.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-C:\Users\evanm\Documents\CS\DC_Remake\backend\obj\Release\net9.0\backend.RazorAssemblyInfo.cache
-C:\Users\evanm\Documents\CS\DC_Remake\backend\obj\Release\net9.0\backend.RazorAssemblyInfo.cs
+C:\Users\evanm\Documents\CS\DC_Remake\backend\bin\Release\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\evanm\Documents\CS\DC_Remake\backend\bin\Release\net9.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\evanm\Documents\CS\DC_Remake\backend\bin\Release\net9.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\evanm\Documents\CS\DC_Remake\backend\bin\Release\net9.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\evanm\Documents\CS\DC_Remake\backend\bin\Release\net9.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\evanm\Documents\CS\DC_Remake\backend\bin\Release\net9.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\evanm\Documents\CS\DC_Remake\backend\bin\Release\net9.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\evanm\Documents\CS\DC_Remake\backend\bin\Release\net9.0\System.IdentityModel.Tokens.Jwt.dll

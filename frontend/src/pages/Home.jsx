@@ -14,7 +14,7 @@ function Home() {
         const fetchHours = async () => {
             const response = await fetch('/api/hours');
             const data = await response.json();
-            console.log(data[0].sunday);
+            console.log("Day: ", data[days[0]]);
             setHours(data);
         };
         fetchHours();
@@ -64,9 +64,12 @@ function Home() {
                 <div className='my-2'>
                     <h1 className="text-2xl py-1">Hours</h1>
                     {days.map(day => {
+                        const dayHours = activeHours && activeHours[day];
                         return (
-                            <p key={day}>
-                                {day.charAt(0).toUpperCase() + day.slice(1)}: {activeHours ? <span>{formatTime(activeHours[day].openingTime)} - {formatTime(activeHours[day].closingTime)}</span> : <span>Closed</span>}
+                            <p key={day} className='capitalize'>
+                                {day}: {dayHours && dayHours.openingTime && dayHours.closingTime
+                                    ? <span>{formatTime(dayHours.openingTime)} - {formatTime(dayHours.closingTime)}</span>
+                                    : <span>Closed</span>}
                             </p>
                         );
                     })}
